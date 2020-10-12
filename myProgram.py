@@ -41,7 +41,7 @@ signature = "datasets/signature.txt"
 # 4. SAVE ALL EXPLANATIONS (inputOntology, inputSubclassStatements):
 # save explanations for each subClass statement in the inputSubclassStatements to file datasets/exp-#.owl
 # --> uncomment the following line to run this function
-#os.system('java -jar kr_functions.jar ' + 'saveAllExplanations' + " " + inputOntology + " " + inputSubclassStatements)
+# os.system('java -jar kr_functions.jar ' + 'saveAllExplanations' + " " + inputOntology + " " + inputSubclassStatements)
 
 
 # For running LETHE forget command:
