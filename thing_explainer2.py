@@ -9,8 +9,8 @@ def forgetnext(pizzafeatures):
     #sig.seek(0)
     #sig.truncate() #clear the file
     for feature in pizzafeatures:
-       sig.write("\nhttp://www.co-ode.org/ontologies/pizza/pizza.owl#") #add the hyperlink first
-       sig.write(feature)
+       sig.write("http://www.co-ode.org/ontologies/pizza/pizza.owl#") #add the hyperlink first
+       sig.write(feature + '\n')
     sig.close()
 
 
@@ -35,7 +35,7 @@ def ForgetSignature(inputOntology, inputSubclassStatements, signature):
     os.system('java -cp lethe-standalone.jar uk.ac.man.cs.lethe.internal.application.ForgettingConsoleApplication --owlFile ' + forgetOntology + ' --method ' + method  + ' --signature ' + signature)
     
 
-def forget_and_explain(inputOntology, inputSubclassStatements, pizzafeature):
+def forget_and_explain(inputOntology, inputSubclassStatements, features_to_forget):
     SaveSubclasses(inputOntology) #create the list of subclass statements for which justifications can be made
     SaveExplanations(inputOntology, inputSubclassStatements) #save all the explanations that justify these subclass statements 
     
@@ -44,13 +44,12 @@ def forget_and_explain(inputOntology, inputSubclassStatements, pizzafeature):
     sig.seek(0)
     sig.truncate() #clear the signature file so we can add things to forget
     sig.close()
-    newsignature = []
-    newsignature.append(pizzafeature) #add the next item you want to forget to signature
-    forgetnext(newsignature) #write to signature file
-    
-    ForgetSignature(inputOntology, inputSubclassStatements, signature)
+    for i in range(len(features_to_forget)): 
+        newsignature = []
+        newsignature.append(features_to_forget[i]) #add the next item you want to forget to signature
+        forgetnext(newsignature) #write to signature file
+        ForgetSignature(inputOntology, inputSubclassStatements, signature)
 
 #call explain and forget function
 classes_to_forget = ["American", "hasIngredient", "Cajun", "CajunSpiceTopping"]    
-for c in classes_to_forget:
-    forget_and_explain(inputOntology, inputSubclassStatements, c)
+forget_and_explain(inputOntology, inputSubclassStatements, classes_to_forget)
