@@ -1,6 +1,4 @@
-import string
 import os
-import sys
 
 
 def forget_next(pizza_features):
