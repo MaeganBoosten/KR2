@@ -1,3 +1,6 @@
+"""This file creates txt files of the different results
+    It is used for the all 3 forgetting methods"""
+
 output = open("output.txt")
 all_lines_output = output.readlines()
 axioms_file = open("output_axioms", "a")

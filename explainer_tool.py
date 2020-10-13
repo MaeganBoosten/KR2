@@ -3,14 +3,17 @@ import os
 import sys
 
 
-# this function only adds items in a list to the signature file which wil be used to call the forgetting tool
-def forgetnext(pizzafeatures):
+def forget_next(pizza_features):
+    """this function only adds items in a list to the signature file
+        which wil be used to call the forgetting tool
+    """
+
     sig = open("datasets/signature.txt", "a")
-    # sig.seek(0)
-    # sig.truncate() #clear the file
-    for feature in pizzafeatures:
+    
+    for feature in pizza_features:
         sig.write("http://www.co-ode.org/ontologies/pizza/pizza.owl#")  # add the hyperlink first
         sig.write(feature + '\n')
+    
     sig.close()
 
 
@@ -18,7 +21,7 @@ def forgetnext(pizzafeatures):
 inputOntology = "datasets/pizza_super_simple.owl"
 inputSubclassStatements = "datasets/subClasses.nt"
 forgetOntology = "datasets/pizza_super_simple.owl"
-method = '2'
+method = '3'  # the method that is chosen
 signature = "datasets/signature.txt"
 allClassNames = ["American", "America", "Cajun", "CajunSpiceTopping", "CaperTopping", "Capricciosa", "Caprina",
                  "CheeseTopping", "CheeseyPizza", "VegetarianTopping", "Veneziana", "Italy", "England", "France",
@@ -41,6 +44,8 @@ def ForgetSignature(inputOntology, inputSubclassStatements, signature):
 
 
 def forget_and_explain(inputOntology, inputSubclassStatements, features_to_forget):
+    """This function calls the LETHE forget command and
+        adds a new feature to the signature file every time it is called again  """
     SaveSubclasses(inputOntology)  # create the list of subclass statements for which justifications can be made
     SaveExplanations(inputOntology,
                      inputSubclassStatements)  # save all the explanations that justify these subclass statements
@@ -50,9 +55,9 @@ def forget_and_explain(inputOntology, inputSubclassStatements, features_to_forge
     sig.truncate()  # clear the signature file so we can add things to forget
     sig.close()
     for i in range(len(features_to_forget)):
-        newsignature = []
-        newsignature.append(features_to_forget[i])  # add the next item you want to forget to signature
-        forgetnext(newsignature)  # write to signature file
+        new_signature = []
+        new_signature.append(features_to_forget[i])  # add the next item you want to forget to signature
+        forget_next(new_signature)  # write to signature file
         ForgetSignature(inputOntology, inputSubclassStatements, signature)
 
 
@@ -60,4 +65,5 @@ def forget_and_explain(inputOntology, inputSubclassStatements, features_to_forge
 classes_to_forget = ["American", "America", "Cajun", "CajunSpiceTopping", "CaperTopping", "Capricciosa", "Caprina",
                  "CheeseTopping", "CheeseyPizza", "VegetarianTopping", "Veneziana", "Italy", "England", "France",
                  "Germany", "hasBase", "hasIngredient", "isBaseOf", "isIngredientOf", "hasSpiciness", "hasTopping"]
+
 forget_and_explain(inputOntology, inputSubclassStatements, classes_to_forget)
