@@ -4,6 +4,7 @@ import seaborn.timeseries
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 axiomsize1 = pd.read_csv('results\output_axiom_size.csv', header=None)
 axiomsize2 = pd.read_csv('results\output_axiom_size2.csv', header=None)
 axiomsize3 = pd.read_csv('results\output_axiom_size3.csv', header=None)
@@ -37,24 +38,28 @@ fig, axs = plt.subplots(2,2,figsize=(30,30))
 axs[0,0].plot(axsize1, label='ALCHTBoxForgetter')
 axs[0,0].plot(axsize2, label='SHQTBoxForgetter')
 axs[0,0].plot(axsize3, label='ALCOntologyForgetter')
+axs[0,0].set_xlabel('Number of forgotten symbols')
 axs[0,0].set_title('Axiom sizes for different forgetting methods')
 axs[0,0].legend()
 
 axs[1,0].plot(ax1, label='ALCHTBoxForgetter')
 axs[1,0].plot(ax2, label='SHQTBoxForgetter')
 axs[1,0].plot(ax3, label='ALCOntologyForgetter')
+axs[1,0].set_xlabel('Number of forgotten symbols')
 axs[1,0].set_title('Number of axioms for different forgetting methods')
 axs[1,0].legend()
 
 axs[0,1].plot(def1, label='ALCHTBoxForgetter')
 axs[0,1].plot(def2, label='SHQTBoxForgetter')
 axs[0,1].plot(def3, label='ALCOntologyForgetter')
+axs[0,1].set_xlabel('Number of forgotten symbols')
 axs[0,1].set_title('Number of definers for different forgetting methods')
 axs[0,1].legend()
 
 axs[1,1].plot(res1, label='ALCHTBoxForgetter')
 axs[1,1].plot(res2, label='SHQTBoxForgetter')
 axs[1,1].plot(res3, label='ALCOntologyForgetter')
+axs[1,1].set_xlabel('Number of forgotten symbols')
 axs[1,1].set_title('Number of restrictions for different forgetting methods')
 axs[1,1].legend()
 
