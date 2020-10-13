@@ -3,7 +3,13 @@ import seaborn as sns
 import seaborn.timeseries
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import stats
 
+def calcstat(x,y,str):
+    t = stats.ttest_ind(x,y)
+    print(str)
+    print('test statistic:', t.statistic)
+    print('p-value:', t.pvalue, '\n')
 
 axiomsize1 = pd.read_csv('results\output_axiom_size.csv', header=None)
 axiomsize2 = pd.read_csv('results\output_axiom_size2.csv', header=None)
@@ -64,3 +70,19 @@ axs[1,1].set_title('Number of restrictions for different forgetting methods')
 axs[1,1].legend()
 
 plt.show()
+
+calcstat(ax1,ax2,'#axioms 1 vs #axioms 2')
+calcstat(ax1,ax3,'#axioms 1 vs #axioms 3')
+calcstat(ax2,ax3,'#axioms 2 vs #axioms 3')
+
+calcstat(axsize1,axsize2,'axiomsize 1 vs axiomsize 2')
+calcstat(axsize1,axsize3,'axiomsize 1 vs axiomsize 3')
+calcstat(axsize2,axsize3,'axiomsize 2 vs axiomsize 3')
+
+calcstat(def1,def2,'#definers 1 vs #definers 2')
+calcstat(def1,def3,'#definers 1 vs #definers 3')
+calcstat(def2,def3,'#definers 2 vs #definers 3')
+
+calcstat(res1,res2,'#restrictions 1 vs #restrictions 2')
+calcstat(res1,res3,'#restrictions 1 vs #restrictions 3')
+calcstat(res2,res3,'#restrictions 2 vs #restrictions 3')
