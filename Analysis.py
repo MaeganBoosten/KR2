@@ -5,6 +5,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
+
+def plot(x,y,z,str):
+    plt.plot(x, label='ALCHTBoxForgetter')
+    plt.plot(y, label='SHQTBoxForgetter')
+    plt.plot(z, label='ALCOntologyForgetter')
+    plt.xlabel('Number of forgotten symbols')
+    plt.title(str)
+    plt.legend()
+    plt.show()
+
+
 def calcstat(x,y,str):
     t = stats.ttest_ind(x,y)
     print(str)
@@ -25,6 +36,10 @@ ax1 = axioms1.values
 ax2 = axioms2.values
 ax3 = axioms3.values
 
+totalsize1 = ax1*axsize1
+totalsize2 = ax2*axsize2
+totalsize3 = ax3*axsize3
+
 definer1 = pd.read_csv('results\output_definers.csv', header=None)
 definer2 = pd.read_csv('results\output_definers2.csv', header=None)
 definer3 = pd.read_csv('results\output_definers3.csv', header=None)
@@ -40,49 +55,30 @@ res2 = restriction2.values
 res3 = restriction3.values
 
 
-fig, axs = plt.subplots(2,2,figsize=(30,30))
-axs[0,0].plot(axsize1, label='ALCHTBoxForgetter')
-axs[0,0].plot(axsize2, label='SHQTBoxForgetter')
-axs[0,0].plot(axsize3, label='ALCOntologyForgetter')
-axs[0,0].set_xlabel('Number of forgotten symbols')
-axs[0,0].set_title('Axiom sizes for different forgetting methods')
-axs[0,0].legend()
+plot(ax1,ax2,ax3,'Number of axioms for different forgetting methods')
+plot(axsize1,axsize2,axsize3,'Axiom sizes for different forgetting methods')
+plot(totalsize1,totalsize2,totalsize3,'Total sizes for different forgetting methods')
+plot(def1,def2,def3,'Number of definers for different forgetting methods')
+plot(res1,res2,res3,'Number of restrictions for different forgetting methods')
 
-axs[1,0].plot(ax1, label='ALCHTBoxForgetter')
-axs[1,0].plot(ax2, label='SHQTBoxForgetter')
-axs[1,0].plot(ax3, label='ALCOntologyForgetter')
-axs[1,0].set_xlabel('Number of forgotten symbols')
-axs[1,0].set_title('Number of axioms for different forgetting methods')
-axs[1,0].legend()
-
-axs[0,1].plot(def1, label='ALCHTBoxForgetter')
-axs[0,1].plot(def2, label='SHQTBoxForgetter')
-axs[0,1].plot(def3, label='ALCOntologyForgetter')
-axs[0,1].set_xlabel('Number of forgotten symbols')
-axs[0,1].set_title('Number of definers for different forgetting methods')
-axs[0,1].legend()
-
-axs[1,1].plot(res1, label='ALCHTBoxForgetter')
-axs[1,1].plot(res2, label='SHQTBoxForgetter')
-axs[1,1].plot(res3, label='ALCOntologyForgetter')
-axs[1,1].set_xlabel('Number of forgotten symbols')
-axs[1,1].set_title('Number of restrictions for different forgetting methods')
-axs[1,1].legend()
-
-plt.show()
 
 calcstat(ax1,ax2,'#axioms 1 vs #axioms 2')
 calcstat(ax1,ax3,'#axioms 1 vs #axioms 3')
 calcstat(ax2,ax3,'#axioms 2 vs #axioms 3')
 
-calcstat(axsize1,axsize2,'axiomsize 1 vs axiomsize 2')
-calcstat(axsize1,axsize3,'axiomsize 1 vs axiomsize 3')
-calcstat(axsize2,axsize3,'axiomsize 2 vs axiomsize 3')
+calcstat(axsize1,axsize2,'axiom size 1 vs axiomsize 2')
+calcstat(axsize1,axsize3,'axiom size 1 vs axiomsize 3')
+calcstat(axsize2,axsize3,'axiom size 2 vs axiomsize 3')
 
-calcstat(def1,def2,'#definers 1 vs #definers 2')
-calcstat(def1,def3,'#definers 1 vs #definers 3')
-calcstat(def2,def3,'#definers 2 vs #definers 3')
+calcstat(totalsize1,totalsize2,'total size 1 vs total size 2')
+calcstat(totalsize1,totalsize3,'total size 1 vs total size 3')
+calcstat(totalsize2,totalsize3,'total size 2 vs total size 3')
 
-calcstat(res1,res2,'#restrictions 1 vs #restrictions 2')
-calcstat(res1,res3,'#restrictions 1 vs #restrictions 3')
-calcstat(res2,res3,'#restrictions 2 vs #restrictions 3')
+#Deze zijn allemaal nan of inf
+#calcstat(def1,def2,'#definers 1 vs #definers 2')
+#calcstat(def1,def3,'#definers 1 vs #definers 3')
+#calcstat(def2,def3,'#definers 2 vs #definers 3')
+
+#calcstat(res1,res2,'#restrictions 1 vs #restrictions 2')
+#calcstat(res1,res3,'#restrictions 1 vs #restrictions 3')
+#calcstat(res2,res3,'#restrictions 2 vs #restrictions 3')
